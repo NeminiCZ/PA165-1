@@ -13,8 +13,8 @@ import cz.fi.muni.pa165.PersistenceSampleApplicationContext;
 import cz.fi.muni.pa165.entity.Category;
 
 
-
-public class Task01  {
+@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+public class Task01 extends AbstractTestNGSpringContextTests {
 
 	
 	@PersistenceUnit
@@ -30,6 +30,14 @@ public class Task01  {
 		em.getTransaction().commit();
 		em.close();
 		//TODO under this line: create a second entity manager in categoryTest, use find method to find the category and assert its name.
+
+		EntityManager em2 = emf.createEntityManager();
+		em2.getTransaction().begin();
+		Category foundCat = em2.find(Category.class, cat.getId());
+		Assert.assertEquals(cat.getName(), "Test");
+		em2.getTransaction().commit();
+		em2.close();
+
 	}
 
 }
