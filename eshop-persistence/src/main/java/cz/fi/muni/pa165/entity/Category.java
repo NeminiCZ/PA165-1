@@ -1,8 +1,6 @@
 package cz.fi.muni.pa165.entity;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,15 +22,16 @@ public class Category {
 	@Column(nullable=false,unique=true)
 	private String name;
 	
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<>();
 
-	//TODO after you are done with task02 you can uncomment this methods
-//	public void addProduct(Product product) {
-//		this.products.add(product);
-//	}
-//
-//	public Set<Product> getProducts() {
-//		return Collections.unmodifiableSet(products);
-//	}
+	public void addProduct(Product product) {
+	this.products.add(product);
+	}
+
+	public Set<Product> getProducts() {
+		return Collections.unmodifiableSet(products);
+	}
 
 	public Category(Long categoryId) {
 		this.id = categoryId; 
